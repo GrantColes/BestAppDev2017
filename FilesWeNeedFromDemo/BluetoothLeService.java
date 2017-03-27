@@ -1,3 +1,13 @@
+/////////////////////////////////////////////////////////////////////
+//Description: This is the Low-Power Bluetooth Class taken from    //
+//the Lattice Health Demo apk. This will be used for Bluetooth     //
+//communication in our new app.                                    //
+//                                                                 //
+//Written by: Lattice, probably                                    //
+//Contributed by: Grant                                            //
+//Date: 3/27/2017                                                  //
+/////////////////////////////////////////////////////////////////////
+
 package com.example.HeartRate;
 
 import android.app.Service;

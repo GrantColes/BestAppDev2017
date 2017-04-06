@@ -1,1 +1,8 @@
-This is Daniel's Readme so Github politely leaves.
+Seems like this is where they actually made the app.
+
+R.java is apparently created automatically by the compiler, and I think the Bluetooth file is a rip from something else.
+
+Also, anywhere you see paramBundle as a instance variable from of type Bundle, it is a decompile error,
+and it should be a local variable of some sort.
+
+Still trying to work that one out.

@@ -42,10 +42,14 @@ import org.apache.http.util.EncodingUtils;
 public class MainActivity
   extends Activity
 {
+  // Variable Declaration
+  // BLE and properties
   static int BLE_MAX_BYTES_PER_TRANSMISSION = 20;
   public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
   public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
   private static final String TAG = MainActivity.class.getSimpleName();
+
+  //
   public static int data_head_en;
   public static int ir_end;
   public static String key_words;
@@ -53,6 +57,8 @@ public class MainActivity
   private static BluetoothLeService mBluetoothLeService;
   private static ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics;
   private static BluetoothGattCharacteristic mNotifyCharacteristic;
+  
+  //
   public static int progress;
   public static int ram_addr;
   public static int rcv_data;
@@ -62,32 +68,52 @@ public class MainActivity
   public static int rd_total;
   public static int rdata_state;
   public static int read_data_len = 0;
+
+  //
   private final String LIST_UUID = "UUID";
+
+  //
   TextView data_20s_value;
   TextView data_60s_value;
+
+  //
   public int data_head = 0;
   int data_len = 0;
   int data_len_high = 0;
   int data_len_low = 0;
   public int data_type;
   public int data_value;
+
+  //
   int divider = 0;
   int divider_high = 0;
   int divider_low = 0;
+
+  //
   private int doubletap_counters = 0;
   private TextView doubletap_state;
+
+  //
   public int fail_cnt = 0;
+
+  //
   private int handheld_counters = 0;
   private TextView handheld_state;
+
+  //
   public int heart_rate_data_cnt = 0;
   final int heart_rate_error = 100;
   final int heart_rate_range = 170;
   final int heart_rate_shold = 65536;
   public double heart_rate_value = 0.0D;
+
+  //
   private boolean mConnected = false;
   private TextView mConnectionState;
   private String mDeviceAddress;
   private ExpandableListView mGattServicesList;
+
+  // Method to connect to bluetooth LE to device
   private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver()
   {
     public void onReceive(Context paramAnonymousContext, Intent paramAnonymousIntent)
@@ -127,6 +153,8 @@ public class MainActivity
       MainActivity.this.dataprocess(paramAnonymousIntent.getStringExtra("com.example.bluetooth.le.EXTRA_DATA"));
     }
   };
+
+  // Bluetooth Initalization
   private final ServiceConnection mServiceConnection = new ServiceConnection()
   {
     public void onServiceConnected(ComponentName paramAnonymousComponentName, IBinder paramAnonymousIBinder)
@@ -147,11 +175,16 @@ public class MainActivity
       MainActivity.mBluetoothLeService = null;
     }
   };
+
   int pedo_cnt;
   int pedo_h;
   int pedo_intr_buf = 0;
   int pedo_l;
+
+  //
   public int rd_out_num = 0;
+  
+  // Displays all the GATT devices available to connect with and displays their parameters
   private final ExpandableListView.OnChildClickListener servicesListClickListner = new ExpandableListView.OnChildClickListener()
   {
     public boolean onChildClick(ExpandableListView paramAnonymousExpandableListView, View paramAnonymousView, int paramAnonymousInt1, int paramAnonymousInt2, long paramAnonymousLong)
@@ -179,6 +212,8 @@ public class MainActivity
       return false;
     }
   };
+
+  //
   public byte setup_value = 0;
   private int shake_counters = 0;
   private TextView shake_state;
@@ -763,6 +798,7 @@ public class MainActivity
     Log.e(TAG, "Outisde of if Main Activity: onResume");
   }
   
+  // This is writing a fixed adress to the register. (jajajaja)
   public void reg_wr_fixed_addr(int paramInt, byte paramByte1, byte paramByte2, byte[] paramArrayOfByte)
   {
     byte[] arrayOfByte = new byte[paramInt + 5];
@@ -784,13 +820,17 @@ public class MainActivity
     }
   }
   
+
+  // Save data to a sd card, we dont have that, do we nee this method? Will it break if we take it out? Also ouputs to log.txt
   public void savedata(String paramString1, String paramString2)
   {
     FileService localFileService = new FileService();
     Log.e(TAG, "save file to disk\n");
     localFileService.saveToSDCard(paramString2, paramString1, 1);
   }
-  
+
+
+  // Accesses Storage device to save log I think, clay is confused by the False and True Null of Madness
   public static class FileService
   {
     private static final Boolean FALSE = null;
@@ -804,6 +844,7 @@ public class MainActivity
       return FALSE;
     }
     
+    //Read a SD file, ja das guten
     public String readSDFile(String paramString)
       throws IOException
     {
